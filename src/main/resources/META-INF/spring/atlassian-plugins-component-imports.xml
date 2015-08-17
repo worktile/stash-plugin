@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/osgi
+                           http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <osgi:reference id="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
+    <osgi:reference id="pageBuilderService" interface="com.atlassian.webresource.api.assembler.PageBuilderService"/>
+    <osgi:reference id="permissionValidationService" interface="com.atlassian.stash.user.PermissionValidationService"/>
+    <osgi:reference id="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory"/>
+    <osgi:reference id="repositoryService" interface="com.atlassian.stash.repository.RepositoryService"/>
+    <osgi:reference id="avatarService" interface="com.atlassian.stash.avatar.AvatarService"/>
+    <osgi:reference id="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
+    <osgi:reference id="navBuilder" interface="com.atlassian.stash.nav.NavBuilder"/>
+    <osgi:reference id="commitService" interface="com.atlassian.stash.commit.CommitService"/>
+
+</beans>

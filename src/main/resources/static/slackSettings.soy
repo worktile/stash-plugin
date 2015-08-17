@@ -1,0 +1,124 @@
+{namespace stash.page.slack.settings}
+
+/**
+ * @param repository
+ * @param slackSettings
+ * @param notificationLevels
+ **/
+{template .viewSlackSettings}
+<html>
+    <head>
+        <meta name="decorator" content="stash.repository.settings">
+        <meta name="projectKey" content="{$repository.project.key}">
+        <meta name="repositorySlug" content="{$repository.slug}">
+        <meta name="activeTab" content="repository-settings-slack-settings">
+        <title>{{stash_i18n('stash.web.slack.settings.title', 'Lesschat settings for {0} / {1}', $repository.project.name, $repository.name)}}</title>
+    </head>
+    <body>
+        {call widget.aui.pageHeader}
+            {param content}
+                <h2>{stash_i18n('stash.web.slack.settings.heading', 'Lesschat settings')}</h2>
+            {/param}
+        {/call}
+        {call widget.aui.form.form}
+            {param action: '' /}
+            {param content}
+
+                <h4>Pull request notifications</h4>
+
+                {call widget.aui.form.checkbox}
+                    {param id: 'slackNotificationsEnabled' /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.slack.enabled.label', 'Enable lesschat notifications for pull requests') /}
+                    {param checked: $slackSettings.slackNotificationsEnabled /}
+                    {param description: stash_i18n('stash.web.slack.settings.slack.enabled.description', 'If enabled, users will receive lesschat notifications about pull request activities') /}
+                {/call}
+
+                <div style="padding-left: 20px;">
+                    <p>Filter pull request events based on activity types</p>
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsOpenedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.opened.enabled.label', 'Opened') /}
+                        {param checked: $slackSettings.slackNotificationsOpenedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.opened.enabled.description', 'Send notifications for Opened PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsReopenedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.reopened.enabled.label', 'Reopened') /}
+                        {param checked: $slackSettings.slackNotificationsReopenedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.reopened.enabled.description', 'Send notifications for Reopened PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsUpdatedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.updated.enabled.label', 'Updated') /}
+                        {param checked: $slackSettings.slackNotificationsUpdatedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.updated.enabled.description', 'Send notifications for Updated PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsApprovedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.approved.enabled.label', 'Approved') /}
+                        {param checked: $slackSettings.slackNotificationsApprovedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.approved.enabled.description', 'Send notifications for Approved PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsUnapprovedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.unapproved.enabled.label', 'Unapproved') /}
+                        {param checked: $slackSettings.slackNotificationsUnapprovedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.unapproved.enabled.description', 'Send notifications for Unapproved PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsDeclinedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.declined.enabled.label', 'Declined') /}
+                        {param checked: $slackSettings.slackNotificationsDeclinedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.declined.enabled.description', 'Send notifications for Declined PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsMergedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.merged.enabled.label', 'Merged') /}
+                        {param checked: $slackSettings.slackNotificationsMergedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.merged.enabled.description', 'Send notifications for Merged PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'slackNotificationsCommentedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.slack.settings.slack.commented.enabled.label', 'Commented') /}
+                        {param checked: $slackSettings.slackNotificationsCommentedEnabled /}
+                        {param description: stash_i18n('stash.web.slack.settings.slack.commented.enabled.description', 'Send notifications for Commented PR events') /}
+                    {/call}
+                </div>
+
+                <h4>Push notifications</h4>
+
+                {call widget.aui.form.checkbox}
+                    {param id: 'slackNotificationsEnabledForPush' /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.slack.push.enabled.label', 'Enable lesschat notifications for push') /}
+                    {param checked: $slackSettings.slackNotificationsEnabledForPush /}
+                    {param description: stash_i18n('stash.web.slack.settings.slack.push.enabled.description', 'If enabled, users will receive lesschat notifications about push activities') /}
+                {/call}
+                {call aui.form.selectField}
+                    {param id: 'slackNotificationLevel' /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.notification.level.label', 'Push notification level') /}
+                    {param value: $slackSettings.notificationLevel /}
+                    {param options: $notificationLevels /}
+                {/call}
+
+                <h4>Channel and hook overrides</h4>
+                
+                {call widget.aui.form.text}
+                    {param id: 'slackWebHookUrl' /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.slack.webhookurl', 'Webhook Url') /}
+                    {param initialValue: $slackSettings.slackWebHookUrl /}
+                    {param description: stash_i18n('stash.web.slack.settings.slack.webhookurl.description', 'Slack webhook url. Overrides global setting, if nonempty. Useful when you want to post to a different team using a different hook') /}
+                {/call}
+                {call aui.form.buttons}
+                    {param content}
+                        {call aui.form.submit}
+                            {param id: 'stash.web.slack.settings.submit' /}
+                            {param text: stash_i18n('stash.web.slack.settings.submit', 'Save') /}
+                            {param type: 'submit' /}
+                        {/call}
+                    {/param}
+                {/call}
+            {/param}
+        {/call}
+    </body>
+</html>
+{/template}

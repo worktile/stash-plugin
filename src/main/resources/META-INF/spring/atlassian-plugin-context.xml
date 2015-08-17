@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="slackSettingsService"
+          class="com.pragbits.stash.DefaultSlackSettingsService">
+        <constructor-arg index="0" ref="pluginSettingsFactory"/>
+        <constructor-arg index="1" ref="permissionValidationService"/>
+    </bean>
+
+    <bean id="slackGlobalSettingsService"
+          class="com.pragbits.stash.DefaultGlobalSlackSettingsService">
+        <constructor-arg index="0" ref="pluginSettingsFactory"/>
+    </bean>
+
+    <bean id="slackNotifier" class="com.pragbits.stash.tools.SlackNotifier">
+    </bean>
+
+    <bean id="pullRequestActivityListener"
+          class="com.pragbits.stash.components.PullRequestActivityListener">
+        <constructor-arg index="0" ref="slackGlobalSettingsService" />
+        <constructor-arg index="1" ref="slackSettingsService" />
+        <constructor-arg index="2" ref="navBuilder" />
+        <constructor-arg index="3" ref="slackNotifier" />
+        <constructor-arg index="4" ref="avatarService" />
+    </bean>
+
+    <bean id="repositoryPushActivityListener"
+          class="com.pragbits.stash.components.RepositoryPushActivityListener">
+        <constructor-arg index="0" ref="slackGlobalSettingsService" />
+        <constructor-arg index="1" ref="slackSettingsService" />
+        <constructor-arg index="2" ref="commitService" />
+        <constructor-arg index="3" ref="navBuilder" />
+        <constructor-arg index="4" ref="slackNotifier" />
+    </bean>
+
+</beans>
