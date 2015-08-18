@@ -32,7 +32,14 @@
                     {param checked: $slackSettings.slackNotificationsEnabled /}
                     {param description: stash_i18n('stash.web.slack.settings.slack.enabled.description', 'If enabled, users will receive lesschat notifications about pull request activities') /}
                 {/call}
-
+                
+                {call aui.form.selectField}
+                    {param id: 'slackNotificationPrLevel' /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.notification.pr.level.label', 'Pull request notification level') /}
+                    {param value: $slackSettings.notificationPrLevel /}
+                    {param options: $notificationLevels /}
+                {/call}
+                
                 <div style="padding-left: 20px;">
                     <p>Filter pull request events based on activity types</p>
                     {call widget.aui.form.checkbox}
@@ -93,6 +100,7 @@
                     {param checked: $slackSettings.slackNotificationsEnabledForPush /}
                     {param description: stash_i18n('stash.web.slack.settings.slack.push.enabled.description', 'If enabled, users will receive lesschat notifications about push activities') /}
                 {/call}
+                
                 {call aui.form.selectField}
                     {param id: 'slackNotificationLevel' /}
                     {param labelContent: stash_i18n('stash.web.slack.settings.notification.level.label', 'Push notification level') /}
@@ -100,7 +108,7 @@
                     {param options: $notificationLevels /}
                 {/call}
 
-                <h4>Channel and hook overrides</h4>
+                <h4>Webhook URL for receive events</h4>
                 
                 {call widget.aui.form.text}
                     {param id: 'slackWebHookUrl' /}

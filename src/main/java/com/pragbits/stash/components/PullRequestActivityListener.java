@@ -299,16 +299,16 @@ public class PullRequestActivityListener {
             // - empty
             // - comma separated list of channel names, eg: #mych1, #mych2, #mych3
 
-            if (channelSelector.getSelectedChannel().isEmpty()) {
+//            if (channelSelector.getSelectedChannel().isEmpty()) {
                 slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
-            } else {
-                // send message to multiple channels
-                List<String> channels = Arrays.asList(channelSelector.getSelectedChannel().split("\\s*,\\s*"));
-                for (String channel: channels) {
-                    payload.setChannel(channel.trim());
-                    slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
-                }
-            }
+//            } else {
+//                // send message to multiple channels
+//                List<String> channels = Arrays.asList(channelSelector.getSelectedChannel().split("\\s*,\\s*"));
+//                for (String channel: channels) {
+//                    payload.setChannel(channel.trim());
+//                    slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+//                }
+//            }
         }
 
     }

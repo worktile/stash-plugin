@@ -38,7 +38,7 @@
 
   <web-item key="global-settings-slack-settings" weight="30" section="atl.admin/admin-settings-section">
    <label key="stash.web.admin.settings.tab.slack.admin.settings">Stash-Lesschat settings</label>
-   <tooltip key="stash.web.admin.settings.tab.slack.admin.settings.tooltip">Configure global settings for slack notifications</tooltip>
+   <tooltip key="stash.web.admin.settings.tab.slack.admin.settings.tooltip">Configure global settings for lesschat notifications</tooltip>
    <link>/plugins/servlet/lesschat-global-settings/admin</link>
   </web-item>
 

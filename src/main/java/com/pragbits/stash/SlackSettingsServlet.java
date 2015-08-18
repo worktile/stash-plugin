@@ -56,10 +56,10 @@ public class SlackSettingsServlet extends HttpServlet {
             return;
         }
 
-        boolean overrideEnabled = false;
-        if (null != req.getParameter("slackNotificationsOverrideEnabled") && req.getParameter("slackNotificationsOverrideEnabled").equals("on")) {
-            overrideEnabled = true;
-        }
+        boolean overrideEnabled = true;
+//        if (null != req.getParameter("slackNotificationsOverrideEnabled") && req.getParameter("slackNotificationsOverrideEnabled").equals("on")) {
+//            overrideEnabled = true;
+//        }
 
         boolean enabled = false;
         if (null != req.getParameter("slackNotificationsEnabled") && req.getParameter("slackNotificationsEnabled").equals("on")) {
@@ -112,16 +112,16 @@ public class SlackSettingsServlet extends HttpServlet {
         }
 
         NotificationLevel notificationLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationLevel")) {
-            notificationLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationLevel"));
-        }
+//        if (null != req.getParameter("slackNotificationLevel")) {
+//            notificationLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationLevel"));
+//        }
 
         NotificationLevel notificationPrLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationPrLevel")) {
-            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationPrLevel"));
-        }
+//        if (null != req.getParameter("slackNotificationPrLevel")) {
+//            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationPrLevel"));
+//        }
 
-        String channel = req.getParameter("slackChannelName");
+        String channel = "";
         String webHookUrl = req.getParameter("slackWebHookUrl");
         slackSettingsService.setSlackSettings(
                 repository,

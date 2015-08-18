@@ -27,7 +27,7 @@
     <body>
         {call widget.aui.pageHeader}
             {param content}
-                <h2>{stash_i18n('stash.web.slack.global.settings.heading', 'Global Slack settings')}</h2>
+                <h2>{stash_i18n('stash.web.slack.global.settings.heading', 'Global Lesschat settings')}</h2>
             {/param}
         {/call}
         {call widget.aui.form.form}
@@ -37,9 +37,9 @@
                 <h4>Pull request notifications</h4>
                 {call widget.aui.form.checkbox}
                     {param id: 'slackNotificationsEnabled' /}
-                    {param labelContent: stash_i18n('stash.web.slack.global.settings.slack.enabled.label', 'Enable slack notifications for pull requests') /}
+                    {param labelContent: stash_i18n('stash.web.slack.global.settings.slack.enabled.label', 'Enable lesschat notifications for pull requests') /}
                     {param checked: $slackNotificationsEnabled /}
-                    {param description: stash_i18n('stash.web.slack.global.settings.slack.enabled.description', 'If enabled, users will receive slack notifications about pull request activities') /}
+                    {param description: stash_i18n('stash.web.slack.global.settings.slack.enabled.description', 'If enabled, users will receive lesschat notifications about pull request activities') /}
                 {/call}
 
                 {call aui.form.selectField}
@@ -106,9 +106,9 @@
 
                 {call widget.aui.form.checkbox}
                     {param id: 'slackNotificationsEnabledForPush' /}
-                    {param labelContent: stash_i18n('stash.web.slack.settings.global.slack.push.enabled.label', 'Enable slack notifications for push') /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.global.slack.push.enabled.label', 'Enable lesschat notifications for push') /}
                     {param checked: $slackNotificationsEnabledForPush /}
-                    {param description: stash_i18n('stash.web.slack.settings.global.slack.push.enabled.description', 'If enabled, users will receive slack notifications about push activities') /}
+                    {param description: stash_i18n('stash.web.slack.settings.global.slack.push.enabled.description', 'If enabled, users will receive lesschat notifications about push activities') /}
                 {/call}
                 {call aui.form.selectField}
                     {param id: 'slackNotificationLevel' /}
@@ -118,18 +118,18 @@
                 {/call}
 
 
-                <h4>Channel and hook name</h4>
+                <h4>Webhook URL for receive events</h4>
                 {call widget.aui.form.text}
                     {param id: 'slackChannelName' /}
-                    {param labelContent: stash_i18n('stash.web.slack.settings.global.slack.channel', 'Channel name') /}
+                    {param labelContent: stash_i18n('stash.web.slack.settings.global.slack.channel', 'Description') /}
                     {param initialValue: $slackChannelName /}
-                    {param description: stash_i18n('stash.web.slack.settings.global.slack.channel.description', 'Slack channel to use. Accepts a single channel name (example: #ch1), a comma separated list of channels (example: #ch1, #ch2, #ch3), or you can leave it empty. When empty, the default channel will be used within the webhook.') /}
+                    {param description: stash_i18n('stash.web.slack.settings.global.slack.channel.description', 'stash plugion for lesschat description') /}
                 {/call}
                 {call widget.aui.form.text}
                     {param id: 'slackGlobalWebHookUrl' /}
                     {param labelContent: stash_i18n('stash.web.slack.global.settings.slack.webhookurl', 'Webhook url') /}
                     {param initialValue: $slackGlobalWebHookUrl /}
-                    {param description: stash_i18n('stash.web.slack.global.settings.slack.channel.description', 'Slack webhook url to use. This can be overriden for each repository at the repo slack settings page, if desired') /}
+                    {param description: stash_i18n('stash.web.slack.global.settings.slack.channel.description', 'Lesschat webhook url to use. This can be overriden for each repository at the repo lesschat settings page, if desired') /}
                 {/call}
                 {call aui.form.buttons}
                     {param content}
