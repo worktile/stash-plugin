@@ -83,7 +83,7 @@ public class RepositoryPushActivityListener {
                         .commits()
                         .buildAbsolute();
 
-                String text = String.format("Push on `%s` by `%s <%s>`. See <%s|commit list>.",
+                String text = String.format("Push on `%s` by `%s <%s>`. See [%s|commit list].",
                         event.getRepository().getName(),
                         event.getUser() != null ? event.getUser().getDisplayName() : "unknown user",
                         event.getUser() != null ? event.getUser().getEmailAddress() : "unknown email",
