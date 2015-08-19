@@ -15,7 +15,7 @@ the manage addons page.
 
 ## Configuration
 
-You need to create an incoming web hook in lesschat. That will give you the
+You need to create a stash service web hook in lesschat. That will give you the
 hook url and the default channel name. Notifications will go to the
 defaul lesschat channel, unless you override them in the configuration for
 a given repository.
