@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-public class SlackSettingsServlet extends HttpServlet {
+public class LesschatSettingsServlet extends HttpServlet {
     private final PageBuilderService pageBuilderService;
-    private final SlackSettingsService slackSettingsService;
+    private final LesschatSettingsService lesschatSettingsService;
     private final RepositoryService repositoryService;
     private final SoyTemplateRenderer soyTemplateRenderer;
     private final PermissionValidationService validationService;
@@ -30,14 +30,14 @@ public class SlackSettingsServlet extends HttpServlet {
     
     private Repository repository = null;
 
-    public SlackSettingsServlet(PageBuilderService pageBuilderService,
-                                    SlackSettingsService slackSettingsService,
+    public LesschatSettingsServlet(PageBuilderService pageBuilderService,
+                                    LesschatSettingsService lesschatSettingsService,
                                     RepositoryService repositoryService,
                                     SoyTemplateRenderer soyTemplateRenderer,
                                     PermissionValidationService validationService,
                                     I18nService i18nService) {
         this.pageBuilderService = pageBuilderService;
-        this.slackSettingsService = slackSettingsService;
+        this.lesschatSettingsService = lesschatSettingsService;
         this.repositoryService = repositoryService;
         this.soyTemplateRenderer = soyTemplateRenderer;
         this.validationService = validationService;
@@ -57,75 +57,75 @@ public class SlackSettingsServlet extends HttpServlet {
         }
 
         boolean overrideEnabled = true;
-//        if (null != req.getParameter("slackNotificationsOverrideEnabled") && req.getParameter("slackNotificationsOverrideEnabled").equals("on")) {
+//        if (null != req.getParameter("lesschatNotificationsOverrideEnabled") && req.getParameter("lesschatNotificationsOverrideEnabled").equals("on")) {
 //            overrideEnabled = true;
 //        }
 
         boolean enabled = false;
-        if (null != req.getParameter("slackNotificationsEnabled") && req.getParameter("slackNotificationsEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsEnabled") && req.getParameter("lesschatNotificationsEnabled").equals("on")) {
           enabled = true;
         }
 
         boolean openedEnabled = false;
-        if (null != req.getParameter("slackNotificationsOpenedEnabled") && req.getParameter("slackNotificationsOpenedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsOpenedEnabled") && req.getParameter("lesschatNotificationsOpenedEnabled").equals("on")) {
             openedEnabled = true;
         }
 
         boolean reopenedEnabled = false;
-        if (null != req.getParameter("slackNotificationsReopenedEnabled") && req.getParameter("slackNotificationsReopenedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsReopenedEnabled") && req.getParameter("lesschatNotificationsReopenedEnabled").equals("on")) {
             reopenedEnabled = true;
         }
 
         boolean updatedEnabled = false;
-        if (null != req.getParameter("slackNotificationsUpdatedEnabled") && req.getParameter("slackNotificationsUpdatedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsUpdatedEnabled") && req.getParameter("lesschatNotificationsUpdatedEnabled").equals("on")) {
             updatedEnabled = true;
         }
 
         boolean approvedEnabled = false;
-        if (null != req.getParameter("slackNotificationsApprovedEnabled") && req.getParameter("slackNotificationsApprovedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsApprovedEnabled") && req.getParameter("lesschatNotificationsApprovedEnabled").equals("on")) {
             approvedEnabled = true;
         }
 
         boolean unapprovedEnabled = false;
-        if (null != req.getParameter("slackNotificationsUnapprovedEnabled") && req.getParameter("slackNotificationsUnapprovedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsUnapprovedEnabled") && req.getParameter("lesschatNotificationsUnapprovedEnabled").equals("on")) {
             unapprovedEnabled = true;
         }
 
         boolean declinedEnabled = false;
-        if (null != req.getParameter("slackNotificationsDeclinedEnabled") && req.getParameter("slackNotificationsDeclinedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsDeclinedEnabled") && req.getParameter("lesschatNotificationsDeclinedEnabled").equals("on")) {
             declinedEnabled = true;
         }
 
         boolean mergedEnabled = false;
-        if (null != req.getParameter("slackNotificationsMergedEnabled") && req.getParameter("slackNotificationsMergedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsMergedEnabled") && req.getParameter("lesschatNotificationsMergedEnabled").equals("on")) {
             mergedEnabled = true;
         }
 
         boolean commentedEnabled = false;
-        if (null != req.getParameter("slackNotificationsCommentedEnabled") && req.getParameter("slackNotificationsCommentedEnabled").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsCommentedEnabled") && req.getParameter("lesschatNotificationsCommentedEnabled").equals("on")) {
             commentedEnabled = true;
         }
 
         boolean enabledPush = false;
-        if (null != req.getParameter("slackNotificationsEnabledForPush") && req.getParameter("slackNotificationsEnabledForPush").equals("on")) {
+        if (null != req.getParameter("lesschatNotificationsEnabledForPush") && req.getParameter("lesschatNotificationsEnabledForPush").equals("on")) {
             enabledPush = true;
         }
 
         NotificationLevel notificationLevel = NotificationLevel.VERBOSE;
-//        if (null != req.getParameter("slackNotificationLevel")) {
-//            notificationLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationLevel"));
+//        if (null != req.getParameter("lesschatNotificationLevel")) {
+//            notificationLevel = NotificationLevel.valueOf(req.getParameter("lesschatNotificationLevel"));
 //        }
 
         NotificationLevel notificationPrLevel = NotificationLevel.VERBOSE;
-//        if (null != req.getParameter("slackNotificationPrLevel")) {
-//            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationPrLevel"));
+//        if (null != req.getParameter("lesschatNotificationPrLevel")) {
+//            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("lesschatNotificationPrLevel"));
 //        }
 
         String channel = "";
-        String webHookUrl = req.getParameter("slackWebHookUrl");
-        slackSettingsService.setSlackSettings(
+        String webHookUrl = req.getParameter("lesschatWebHookUrl");
+        lesschatSettingsService.setlesschatSettings(
                 repository,
-                new ImmutableSlackSettings(
+                new ImmutableLesschatSettings(
                         overrideEnabled,
                         enabled,
                         openedEnabled,
@@ -173,12 +173,12 @@ public class SlackSettingsServlet extends HttpServlet {
     private void doView(Repository repository, HttpServletResponse response)
             throws ServletException, IOException {
         validationService.validateForRepository(repository, Permission.REPO_ADMIN);
-        SlackSettings slackSettings = slackSettingsService.getSlackSettings(repository);
+        LesschatSettings lesschatSettings = lesschatSettingsService.getlesschatSettings(repository);
         render(response,
-                "stash.page.slack.settings.viewSlackSettings",
+                "stash.page.lesschat.settings.viewlesschatSettings",
                 ImmutableMap.<String, Object>builder()
                         .put("repository", repository)
-                        .put("slackSettings", slackSettings)
+                        .put("lesschatSettings", lesschatSettings)
                         .put("notificationLevels", new SelectFieldOptions(NotificationLevel.values()).toSoyStructure())
                         .build()
         );
@@ -186,7 +186,7 @@ public class SlackSettingsServlet extends HttpServlet {
 
     private void render(HttpServletResponse response, String templateName, Map<String, Object> data)
             throws IOException, ServletException {
-        pageBuilderService.assembler().resources().requireContext("plugin.page.slack");
+        pageBuilderService.assembler().resources().requireContext("plugin.page.lesschat");
         response.setContentType("text/html;charset=UTF-8");
         try {
             soyTemplateRenderer.render(response.getWriter(), PluginMetadata.getCompleteModuleKey("soy-templates"), templateName, data);

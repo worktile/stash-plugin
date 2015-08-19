@@ -14,16 +14,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-public class SlackNotifier {
+public class LesschatNotifier {
 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
-    private static final Logger log = LoggerFactory.getLogger(SlackNotifier.class);
+    private static final Logger log = LoggerFactory.getLogger(LesschatNotifier.class);
 
-    public  SlackNotifier() {
+    public  LesschatNotifier() {
 
     }
 
-    public void SendSlackNotification(String targetUrl, String jsonString) {
+    public void SendlesschatNotification(String targetUrl, String jsonString) {
         try {
             /*
             RequestConfig requestConfig = RequestConfig.custom()
@@ -41,13 +41,13 @@ public class SlackNotifier {
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                     HttpEntity entity = response.getEntity();
                     String responseString = EntityUtils.toString(entity, "UTF-8");
-                    log.error("#error during httpPost in SlackNotifier: " + responseString);
+                    log.error("#error during httpPost in lesschatNotifier: " + responseString);
                 }
             } finally {
                 response.close();
             }
         } catch (Exception e) {
-            log.error("#error during http request execution in SlackNotifier: ", e);
+            log.error("#error during http request execution in lesschatNotifier: ", e);
         }
     }
 }

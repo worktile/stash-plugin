@@ -1,7 +1,7 @@
 package com.pragbits.stash.tools;
 import com.google.gson.annotations.*;
 
-public class SlackAttachmentField {
+public class LesschatAttachmentField {
 
 
     public String getTitle() {

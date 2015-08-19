@@ -1,65 +1,65 @@
 package com.pragbits.stash.tools;
 
 import com.atlassian.stash.repository.Repository;
-import com.pragbits.stash.ImmutableSlackSettings;
-import com.pragbits.stash.SlackGlobalSettingsService;
-import com.pragbits.stash.SlackSettings;
-import com.pragbits.stash.SlackSettingsService;
+import com.pragbits.stash.ImmutableLesschatSettings;
+import com.pragbits.stash.LesschatGlobalSettingsService;
+import com.pragbits.stash.LesschatSettings;
+import com.pragbits.stash.LesschatSettingsService;
 
 public class SettingsSelector {
 
-    private SlackSettingsService slackSettingsService;
-    private SlackGlobalSettingsService slackGlobalSettingsService;
-    private SlackSettings slackSettings;
+    private LesschatSettingsService lesschatSettingsService;
+    private LesschatGlobalSettingsService lesschatGlobalSettingsService;
+    private LesschatSettings lesschatSettings;
     private Repository repository;
-    private SlackSettings resolvedSlackSettings;
+    private LesschatSettings resolvedlesschatSettings;
 
 
-    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2slack.globalsettings.hookurl";
-    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "stash2slack.globalsettings.channelname";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "stash2slack.globalsettings.slacknotificationsenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "stash2slack.globalsettings.slacknotificationsopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "stash2slack.globalsettings.slacknotificationsreopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "stash2slack.globalsettings.slacknotificationsupdatedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "stash2slack.globalsettings.slacknotificationsapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "stash2slack.globalsettings.slacknotificationsunapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "stash2slack.globalsettings.slacknotificationsdeclinedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "stash2slack.globalsettings.slacknotificationsmergedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "stash2slack.globalsettings.slacknotificationscommentedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "stash2slack.globalsettings.slacknotificationslevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "stash2slack.globalsettings.slacknotificationsprlevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "stash2slack.globalsettings.slacknotificationspushenabled";
+    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2lesschat.globalsettings.hookurl";
+    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "stash2lesschat.globalsettings.channelname";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsreopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsupdatedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsunapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsdeclinedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationsmergedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationscommentedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "stash2lesschat.globalsettings.lesschatnotificationslevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "stash2lesschat.globalsettings.lesschatnotificationsprlevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "stash2lesschat.globalsettings.lesschatnotificationspushenabled";
 
 
-    public SettingsSelector(SlackSettingsService slackSettingsService, SlackGlobalSettingsService slackGlobalSettingsService, Repository repository) {
-        this.slackSettingsService = slackSettingsService;
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
+    public SettingsSelector(LesschatSettingsService lesschatSettingsService, LesschatGlobalSettingsService lesschatGlobalSettingsService, Repository repository) {
+        this.lesschatSettingsService = lesschatSettingsService;
+        this.lesschatGlobalSettingsService = lesschatGlobalSettingsService;
         this.repository = repository;
-        this.slackSettings = slackSettingsService.getSlackSettings(repository);
-        this.setResolvedSlackSettings();
+        this.lesschatSettings = lesschatSettingsService.getlesschatSettings(repository);
+        this.setResolvedlesschatSettings();
     }
 
-    public SlackSettings getResolvedSlackSettings() {
-        return this.resolvedSlackSettings;
+    public LesschatSettings getResolvedlesschatSettings() {
+        return this.resolvedlesschatSettings;
     }
 
-    private void setResolvedSlackSettings() {
-        resolvedSlackSettings = new ImmutableSlackSettings(
-                slackSettings.isSlackNotificationsOverrideEnabled() ? true : false,
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsEnabled() : slackGlobalSettingsService.getSlackNotificationsEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsOpenedEnabled() : slackGlobalSettingsService.getSlackNotificationsOpenedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsReopenedEnabled() : slackGlobalSettingsService.getSlackNotificationsReopenedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsUpdatedEnabled() : slackGlobalSettingsService.getSlackNotificationsUpdatedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsApprovedEnabled() : slackGlobalSettingsService.getSlackNotificationsApprovedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsUnapprovedEnabled() : slackGlobalSettingsService.getSlackNotificationsUnapprovedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsDeclinedEnabled() : slackGlobalSettingsService.getSlackNotificationsDeclinedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsMergedEnabled() : slackGlobalSettingsService.getSlackNotificationsMergedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsCommentedEnabled() : slackGlobalSettingsService.getSlackNotificationsCommentedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsEnabledForPush() : slackGlobalSettingsService.getSlackNotificationsEnabledForPush(KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getNotificationLevel() : slackGlobalSettingsService.getNotificationLevel(KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getNotificationPrLevel() : slackGlobalSettingsService.getNotificationPrLevel(KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackChannelName() : slackGlobalSettingsService.getChannelName(KEY_GLOBAL_SETTING_CHANNEL_NAME),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackWebHookUrl() : slackGlobalSettingsService.getWebHookUrl(KEY_GLOBAL_SETTING_HOOK_URL)
+    private void setResolvedlesschatSettings() {
+        resolvedlesschatSettings = new ImmutableLesschatSettings(
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? true : false,
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsOpenedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsOpenedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsReopenedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsReopenedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsUpdatedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsUpdatedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsApprovedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsApprovedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsUnapprovedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsUnapprovedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsDeclinedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsDeclinedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsMergedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsMergedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsCommentedEnabled() : lesschatGlobalSettingsService.getlesschatNotificationsCommentedEnabled(KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.islesschatNotificationsEnabledForPush() : lesschatGlobalSettingsService.getlesschatNotificationsEnabledForPush(KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.getNotificationLevel() : lesschatGlobalSettingsService.getNotificationLevel(KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.getNotificationPrLevel() : lesschatGlobalSettingsService.getNotificationPrLevel(KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.getlesschatChannelName() : lesschatGlobalSettingsService.getChannelName(KEY_GLOBAL_SETTING_CHANNEL_NAME),
+                lesschatSettings.islesschatNotificationsOverrideEnabled() ? lesschatSettings.getlesschatWebHookUrl() : lesschatGlobalSettingsService.getWebHookUrl(KEY_GLOBAL_SETTING_HOOK_URL)
         );
     }
 

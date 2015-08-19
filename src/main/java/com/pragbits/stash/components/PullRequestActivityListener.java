@@ -20,46 +20,46 @@ import java.util.List;
 import java.util.Set;
 
 public class PullRequestActivityListener {
-    static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2slack.globalsettings.hookurl";
-    static final String KEY_GLOBAL_SLACK_CHANNEL_NAME = "stash2slack.globalsettings.channelname";
+    static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2lesschat.globalsettings.hookurl";
+    static final String KEY_GLOBAL_lesschat_CHANNEL_NAME = "stash2lesschat.globalsettings.channelname";
     private static final Logger log = LoggerFactory.getLogger(PullRequestActivityListener.class);
 
-    private final SlackGlobalSettingsService slackGlobalSettingsService;
-    private final SlackSettingsService slackSettingsService;
+    private final LesschatGlobalSettingsService lesschatGlobalSettingsService;
+    private final LesschatSettingsService lesschatSettingsService;
     private final NavBuilder navBuilder;
-    private final SlackNotifier slackNotifier;
+    private final LesschatNotifier lesschatNotifier;
     private final AvatarService avatarService;
     private final AvatarRequest avatarRequest = new AvatarRequest(true, 16, true);
     private final Gson gson = new Gson();
 
-    public PullRequestActivityListener(SlackGlobalSettingsService slackGlobalSettingsService,
-                                             SlackSettingsService slackSettingsService,
+    public PullRequestActivityListener(LesschatGlobalSettingsService lesschatGlobalSettingsService,
+                                             LesschatSettingsService lesschatSettingsService,
                                              NavBuilder navBuilder,
-                                             SlackNotifier slackNotifier,
+                                             LesschatNotifier lesschatNotifier,
                                              AvatarService avatarService) {
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
-        this.slackSettingsService = slackSettingsService;
+        this.lesschatGlobalSettingsService = lesschatGlobalSettingsService;
+        this.lesschatSettingsService = lesschatSettingsService;
         this.navBuilder = navBuilder;
-        this.slackNotifier = slackNotifier;
+        this.lesschatNotifier = lesschatNotifier;
         this.avatarService = avatarService;
     }
 
     @EventListener
-    public void NotifySlackChannel(PullRequestActivityEvent event) {
+    public void NotifylesschatChannel(PullRequestActivityEvent event) {
         // find out if notification is enabled for this repo
         Repository repository = event.getPullRequest().getToRef().getRepository();
-        SlackSettings slackSettings = slackSettingsService.getSlackSettings(repository);
-        String globalHookUrl = slackGlobalSettingsService.getWebHookUrl(KEY_GLOBAL_SETTING_HOOK_URL);
+        LesschatSettings lesschatSettings = lesschatSettingsService.getlesschatSettings(repository);
+        String globalHookUrl = lesschatGlobalSettingsService.getWebHookUrl(KEY_GLOBAL_SETTING_HOOK_URL);
 
 
-        SettingsSelector settingsSelector = new SettingsSelector(slackSettingsService,  slackGlobalSettingsService, repository);
-        SlackSettings resolvedSlackSettings = settingsSelector.getResolvedSlackSettings();
+        SettingsSelector settingsSelector = new SettingsSelector(lesschatSettingsService,  lesschatGlobalSettingsService, repository);
+        LesschatSettings resolvedlesschatSettings = settingsSelector.getResolvedlesschatSettings();
 
-        if (resolvedSlackSettings.isSlackNotificationsEnabled()) {
+        if (resolvedlesschatSettings.islesschatNotificationsEnabled()) {
 
-            String localHookUrl = resolvedSlackSettings.getSlackWebHookUrl();
+            String localHookUrl = resolvedlesschatSettings.getlesschatWebHookUrl();
             WebHookSelector hookSelector = new WebHookSelector(globalHookUrl, localHookUrl);
-            ChannelSelector channelSelector = new ChannelSelector(slackGlobalSettingsService.getChannelName(KEY_GLOBAL_SLACK_CHANNEL_NAME), slackSettings.getSlackChannelName());
+            ChannelSelector channelSelector = new ChannelSelector(lesschatGlobalSettingsService.getChannelName(KEY_GLOBAL_lesschat_CHANNEL_NAME), lesschatSettings.getlesschatChannelName());
 
             if (!hookSelector.isHookValid()) {
                 log.error("There is no valid configured Web hook url! Reason: " + hookSelector.getProblem());
@@ -73,42 +73,42 @@ public class PullRequestActivityListener {
             String activity = event.getActivity().getAction().name();
             String avatar = event.getUser() != null ? avatarService.getUrlForPerson(event.getUser(), avatarRequest) : "";
 
-            NotificationLevel resolvedLevel = resolvedSlackSettings.getNotificationPrLevel();
+            NotificationLevel resolvedLevel = resolvedlesschatSettings.getNotificationPrLevel();
 
             // Ignore RESCOPED PR events
             if (activity.equalsIgnoreCase("RESCOPED") && event instanceof PullRequestRescopeActivityEvent) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("OPENED") && !resolvedSlackSettings.isSlackNotificationsOpenedEnabled()) {
+            if (activity.equalsIgnoreCase("OPENED") && !resolvedlesschatSettings.islesschatNotificationsOpenedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("REOPENED") && !resolvedSlackSettings.isSlackNotificationsReopenedEnabled()) {
+            if (activity.equalsIgnoreCase("REOPENED") && !resolvedlesschatSettings.islesschatNotificationsReopenedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("UPDATED") && !resolvedSlackSettings.isSlackNotificationsUpdatedEnabled()) {
+            if (activity.equalsIgnoreCase("UPDATED") && !resolvedlesschatSettings.islesschatNotificationsUpdatedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("APPROVED") && !resolvedSlackSettings.isSlackNotificationsApprovedEnabled()) {
+            if (activity.equalsIgnoreCase("APPROVED") && !resolvedlesschatSettings.islesschatNotificationsApprovedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("UNAPPROVED") && !resolvedSlackSettings.isSlackNotificationsUnapprovedEnabled()) {
+            if (activity.equalsIgnoreCase("UNAPPROVED") && !resolvedlesschatSettings.islesschatNotificationsUnapprovedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("DECLINED") && !resolvedSlackSettings.isSlackNotificationsDeclinedEnabled()) {
+            if (activity.equalsIgnoreCase("DECLINED") && !resolvedlesschatSettings.islesschatNotificationsDeclinedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("MERGED") && !resolvedSlackSettings.isSlackNotificationsMergedEnabled()) {
+            if (activity.equalsIgnoreCase("MERGED") && !resolvedlesschatSettings.islesschatNotificationsMergedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("COMMENTED") && !resolvedSlackSettings.isSlackNotificationsCommentedEnabled()) {
+            if (activity.equalsIgnoreCase("COMMENTED") && !resolvedlesschatSettings.islesschatNotificationsCommentedEnabled()) {
                 return;
             }
             
@@ -119,11 +119,11 @@ public class PullRequestActivityListener {
                     .overview()
                     .buildAbsolute();
 
-            SlackPayload payload = new SlackPayload();
+            LesschatPayload payload = new LesschatPayload();
             payload.setMrkdwn(true);
             payload.setLinkNames(true);
 
-            SlackAttachment attachment = new SlackAttachment();
+            LesschatAttachment attachment = new LesschatAttachment();
             attachment.setAuthorName(userName);
             attachment.setAuthorIcon(avatar);
 
@@ -274,7 +274,7 @@ public class PullRequestActivityListener {
             }
 
             if (resolvedLevel == NotificationLevel.VERBOSE) {
-                SlackAttachmentField projectField = new SlackAttachmentField();
+                LesschatAttachmentField projectField = new LesschatAttachmentField();
                 projectField.setTitle("Source");
                 projectField.setValue(String.format("_%s — %s_\n`%s`",
                         event.getPullRequest().getFromRef().getRepository().getProject().getName(),
@@ -283,7 +283,7 @@ public class PullRequestActivityListener {
                 projectField.setShort(true);
                 attachment.addField(projectField);
 
-                SlackAttachmentField repoField = new SlackAttachmentField();
+                LesschatAttachmentField repoField = new LesschatAttachmentField();
                 repoField.setTitle("Destination");
                 repoField.setValue(String.format("_%s — %s_\n`%s`",
                         event.getPullRequest().getFromRef().getRepository().getProject().getName(),
@@ -295,33 +295,33 @@ public class PullRequestActivityListener {
 
             payload.addAttachment(attachment);
 
-            // slackSettings.getSlackChannelName might be:
+            // lesschatSettings.getlesschatChannelName might be:
             // - empty
             // - comma separated list of channel names, eg: #mych1, #mych2, #mych3
 
 //            if (channelSelector.getSelectedChannel().isEmpty()) {
-                slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+                lesschatNotifier.SendlesschatNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
 //            } else {
 //                // send message to multiple channels
 //                List<String> channels = Arrays.asList(channelSelector.getSelectedChannel().split("\\s*,\\s*"));
 //                for (String channel: channels) {
 //                    payload.setChannel(channel.trim());
-//                    slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+//                    lesschatNotifier.SendlesschatNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
 //                }
 //            }
         }
 
     }
 
-    private void addField(SlackAttachment attachment, String title, String message) {
-        SlackAttachmentField field = new SlackAttachmentField();
+    private void addField(LesschatAttachment attachment, String title, String message) {
+        LesschatAttachmentField field = new LesschatAttachmentField();
         field.setTitle(title);
         field.setValue(message);
         field.setShort(false);
         attachment.addField(field);
     }
 
-    private void addReviewers(SlackAttachment attachment, Set<PullRequestParticipant> reviewers) {
+    private void addReviewers(LesschatAttachment attachment, Set<PullRequestParticipant> reviewers) {
         if (reviewers.isEmpty()) {
             return;
         }

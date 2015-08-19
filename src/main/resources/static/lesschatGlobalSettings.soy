@@ -1,0 +1,147 @@
+{namespace stash.page.lesschat.global.settings}
+
+/**
+ * @param lesschatGlobalWebHookUrl
+ * @param lesschatChannelName
+ * @param lesschatNotificationsEnabled
+ * @param lesschatNotificationsOpenedEnabled
+ * @param lesschatNotificationsReopenedEnabled
+ * @param lesschatNotificationsUpdatedEnabled
+ * @param lesschatNotificationsApprovedEnabled
+ * @param lesschatNotificationsUnapprovedEnabled
+ * @param lesschatNotificationsDeclinedEnabled
+ * @param lesschatNotificationsMergedEnabled
+ * @param lesschatNotificationsCommentedEnabled
+ * @param lesschatNotificationsEnabledForPush
+ * @param notificationLevel
+ * @param notificationPrLevel
+ * @param notificationLevels
+ **/
+{template .viewGloballesschatSettings}
+<html>
+    <head>
+        <title>Global lesschat settings</title>
+        <meta name="decorator" content="atl.admin">
+        <meta name="activeTab" content="global-settings-lesschat-settings">
+    </head>
+    <body>
+        {call widget.aui.pageHeader}
+            {param content}
+                <h2>{stash_i18n('stash.web.lesschat.global.settings.heading', 'Global Lesschat settings')}</h2>
+            {/param}
+        {/call}
+        {call widget.aui.form.form}
+            {param action: '' /}
+            {param content}
+
+                <h4>Pull request notifications</h4>
+                {call widget.aui.form.checkbox}
+                    {param id: 'lesschatNotificationsEnabled' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.global.settings.lesschat.enabled.label', 'Enable lesschat notifications for pull requests') /}
+                    {param checked: $lesschatNotificationsEnabled /}
+                    {param description: stash_i18n('stash.web.lesschat.global.settings.lesschat.enabled.description', 'If enabled, users will receive lesschat notifications about pull request activities') /}
+                {/call}
+
+                {call aui.form.selectField}
+                    {param id: 'lesschatNotificationPrLevel' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.settings.global.notification.pr.level.label', 'Pull request notification level') /}
+                    {param value: $notificationPrLevel /}
+                    {param options: $notificationLevels /}
+                {/call}
+
+
+                <div style="padding-left: 20px;">
+                    <p>Filter pull request events based on activity types</p>
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsOpenedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.global.settings.lesschat.opened.enabled.label', 'Opened') /}
+                        {param checked: $lesschatNotificationsOpenedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.opened.enabled.description', 'Send notifications for Opened PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsReopenedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.reopened.enabled.label', 'Reopened') /}
+                        {param checked: $lesschatNotificationsReopenedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.reopened.enabled.description', 'Send notifications for Reopened PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsUpdatedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.updated.enabled.label', 'Updated') /}
+                        {param checked: $lesschatNotificationsUpdatedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.updated.enabled.description', 'Send notifications for Updated PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsApprovedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.approved.enabled.label', 'Approved') /}
+                        {param checked: $lesschatNotificationsApprovedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.approved.enabled.description', 'Send notifications for Approved PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsUnapprovedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.unapproved.enabled.label', 'Unapproved') /}
+                        {param checked: $lesschatNotificationsUnapprovedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.unapproved.enabled.description', 'Send notifications for Unapproved PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsDeclinedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.declined.enabled.label', 'Declined') /}
+                        {param checked: $lesschatNotificationsDeclinedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.declined.enabled.description', 'Send notifications for Declined PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsMergedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.merged.enabled.label', 'Merged') /}
+                        {param checked: $lesschatNotificationsMergedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.merged.enabled.description', 'Send notifications for Merged PR events') /}
+                    {/call}
+                    {call widget.aui.form.checkbox}
+                        {param id: 'lesschatNotificationsCommentedEnabled' /}
+                        {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.commented.enabled.label', 'Commented') /}
+                        {param checked: $lesschatNotificationsCommentedEnabled /}
+                        {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.commented.enabled.description', 'Send notifications for Commented PR events') /}
+                    {/call}
+                </div>
+
+                <h4>Push notifications</h4>
+
+                {call widget.aui.form.checkbox}
+                    {param id: 'lesschatNotificationsEnabledForPush' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.push.enabled.label', 'Enable lesschat notifications for push') /}
+                    {param checked: $lesschatNotificationsEnabledForPush /}
+                    {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.push.enabled.description', 'If enabled, users will receive lesschat notifications about push activities') /}
+                {/call}
+                {call aui.form.selectField}
+                    {param id: 'lesschatNotificationLevel' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.settings.global.notification.level.label', 'Notification level') /}
+                    {param value: $notificationLevel /}
+                    {param options: $notificationLevels /}
+                {/call}
+
+
+                <h4>Webhook URL for receive events</h4>
+                {call widget.aui.form.text}
+                    {param id: 'lesschatChannelName' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.settings.global.lesschat.channel', 'Description') /}
+                    {param initialValue: $lesschatChannelName /}
+                    {param description: stash_i18n('stash.web.lesschat.settings.global.lesschat.channel.description', 'stash plugion for lesschat description') /}
+                {/call}
+                {call widget.aui.form.text}
+                    {param id: 'lesschatGlobalWebHookUrl' /}
+                    {param labelContent: stash_i18n('stash.web.lesschat.global.settings.lesschat.webhookurl', 'Webhook url') /}
+                    {param initialValue: $lesschatGlobalWebHookUrl /}
+                    {param description: stash_i18n('stash.web.lesschat.global.settings.lesschat.channel.description', 'Lesschat webhook url to use. This can be overriden for each repository at the repo lesschat settings page, if desired') /}
+                {/call}
+                {call aui.form.buttons}
+                    {param content}
+                        {call aui.form.submit}
+                            {param id: 'stash.web.lesschat.global.settings.submit' /}
+                            {param text: stash_i18n('stash.web.lesschat.global.settings.submit', 'Save') /}
+                            {param type: 'submit' /}
+                        {/call}
+                    {/param}
+                {/call}
+            {/param}
+        {/call}
+    </body>
+</html>
+{/template}
