@@ -1,4 +1,4 @@
-# Stash2lesschat
+# stash-plugin
 
 Plugin subscribes to Stash server events and send notifications to 
 lesschat channels.
